@@ -1,0 +1,143 @@
+//11-12-2023 JOINS
+ create table student10(id int,name varchar(15));
+  create table department10(id int , department varchar(15));
+   insert into student10 values(1,'faisal');
+    insert into student10 values(2,'tej');
+
+ insert into student10 values(3,'aa');
+insert into student10 values(5,'madan');
+insert into department10 values(1,'cse');
+ insert into department10 values(2,'bca');
+ insert into department10 values(1,'mech');
+ insert into department10 values(4,'bse');
+ insert into department10 values(5,'civil');
+ select * from student10;
+/*| id   | name   |
++------+--------+
+|    1 | faisal |
+|    2 | tej    |
+|    3 | aa     |
+|    5 | madan  |
++------+--------+
+ select * from department10;*/
+/*+------+------------+
+| id   | department |
++------+------------+
+|    1 | cse        |
+|    2 | bca        |
+|    1 | mech       |
+|    4 | bse        |
+|    5 | civil      |
++------+------------+*/
+select * from student10 left join department10 on student10.id=department10.id;
+/*+------+--------+------+------------+
+| id   | name   | id   | department |
++------+--------+------+------------+
+|    1 | faisal |    1 | mech       |
+|    1 | faisal |    1 | cse        |
+|    2 | tej    |    2 | bca        |
+|    3 | aa     | NULL | NULL       |
+|    5 | madan  |    5 | civil      |
++------+--------+------+------------+*/
+select * from student10 right join department10 on student10.id=department10.id;
+/*+------+--------+------+------------+
+| id   | name   | id   | department |
++------+--------+------+------------+
+|    1 | faisal |    1 | cse        |
+|    2 | tej    |    2 | bca        |
+|    1 | faisal |    1 | mech       |
+| NULL | NULL   |    4 | bse        |
+|    5 | madan  |    5 | civil      |
++------+--------+------+------------+ */
+ select * from student10 inner join department10 on student10.id=department10.id;
+/*+------+--------+------+------------+
+| id   | name   | id   | department |
++------+--------+------+------------+
+|    1 | faisal |    1 | cse        |
+|    2 | tej    |    2 | bca        |
+|    1 | faisal |    1 | mech       |
+|    5 | madan  |    5 | civil      |
++------+--------+------+------------+*/
+
+/* another example sailor boat references*/
+create table sailors(sid int primary key,sname varchar(10),rating varchar(10),age int);
+
+create table boat(bid int primary key,bname varchar(15),color varchar(15));
+
+create table reserves(sid int ,bid int,rdate date ,primary key(sid,bid) ,
+  foreign key(sid) references sailors(sid), foreign key(bid) references boat(bid));
+ /*inserting values*/
+ insert into sailors values(1,'faisal',9,22);
+insert into sailors values(2,'madhu',8,24);
+ insert into sailors values(3,'tej',7,25);
+ insert into sailors values(4,'rakesh',8,25);
+insert into sailors values(5,'supriya',6,30);
+
+insert into boat values(1,'good','red');
+insert into boat values(2,'bad','pink');
+insert into boat values(3,'avg','blue');
+insert into boat values(4,'manage','green');
+insert into boat values(5,'qwerty','yellow');
+
+ insert into reserves values(1,1,'2022-02-01');
+ insert into reserves values(2,2,'2022-05-01');
+ insert into reserves values(3,3,'2022-07-01');
+ insert into reserves values(4,4,'2022-08-01');
+ insert into reserves values(5,5,'2022-09-01');
+
+ select * from sailors;
+/*+-----+---------+--------+------+
+| sid | sname   | rating | age  |
++-----+---------+--------+------+
+|   1 | faisal  | 9      |   22 |
+|   2 | madhu   | 8      |   24 |
+|   3 | tej     | 7      |   25 |
+|   4 | rakesh  | 8      |   25 |
+|   5 | supriya | 6      |   30 |
++-----+---------+--------+------+*/
+/*select * from boat;
++-----+--------+--------+
+| bid | bname  | color  |
++-----+--------+--------+
+|   1 | good   | red    |
+|   2 | bad    | pink   |
+|   3 | avg    | blue   |
+|   4 | manage | green  |
+|   5 | qwerty | yellow |
++-----+--------+--------+*/
+
+select * from reserves;
+/*+-----+-----+------------+
+| sid | bid | rdate      |
++-----+-----+------------+
+|   1 |   1 | 2022-02-01 |
+|   2 |   2 | 2022-05-01 |
+|   3 |   3 | 2022-07-01 |
+|   4 |   4 | 2022-08-01 |
+|   5 |   5 | 2022-09-01 |
++-----+-----+------------+*/
+/* 1. Display the name of sailors who reserves boat id=1;*/
+ select sname from sailors,reserves where sailors.sid=reserves.sid and bid=1;
+/*+--------+
+| sname  |
++--------+
+| faisal |
++--------+*/
+
+/* 2.select sname of sailors who reserves red color boat*/
+ select color from boat,reserves,sailors where boat.bid=reserves.bid and reserves.sid=sailors.sid and sailors.sname='faisal';
+/*+-------+
+| color |
++-------+
+| red   |
++-------+*/
+
+/* 3. who have booked red colour boat */
+select sname from sailors,boat,reserves where boat.bid=reserves.bid and reserves.sid=sailors.sid and boat.color='red';
+/*+--------+
+| sname  |
++--------+
+| faisal |
++--------+*/
+
+/* 4.who have booked atleast one boat*/
