@@ -1,0 +1,124 @@
+/* 12-12-2023*/
+
+ use user;
+ 
+  create table college10(cid int,cname varchar(30),branch varchar(25),per float,email varchar(25));
+  
+   insert into college10 values(101,'faisal','cse',80.45,'mdfaiskhan@gmail.com');
+insert into college10 values(102,'tej','ece',70.45,'tej@gmail.com');
+insert into college10 values(103,'madhu','mech',75.45,'madhu@gmail.com');
+insert into college10 values(104,'niki','civil',65.45,'niki@gmail.com');
+insert into college10 values(105,'ramesh','cse',69.45,'ramesh@gmail.com');
+insert into college10 values(106,'suresh','ece',64.45,'suresh@gmail.com');
+insert into college10 values(107,'rakesh','mech',81.45,'rakesh@gmail.com');
+insert into college10 values(108,'mukesh','civil',82.45,'mukesh@gmail.com');
+insert into college10 values(109,'salman','cse',83.45,'salman@gmail.com');
+insert into college10 values(110,'ajay','ece',84.45,'ajay@gmail.com');
+insert into college10 values(111,'vijay','mech',54.45,'vijay@gmail.com');
+insert into college10 values(112,'roshan','civil',55.45,'roshan@gmail.com');
+
+
+select * from college10;
+/*+------+--------+--------+-------+----------------------+
+| cid  | cname  | branch | per   | email                |
++------+--------+--------+-------+----------------------+
+|  101 | faisal | cse    | 80.45 | mdfaiskhan@gmail.com |
+|  102 | tej    | ece    | 70.45 | tej@gmail.com        |
+|  103 | madhu  | mech   | 75.45 | madhu@gmail.com      |
+|  104 | niki   | civil  | 65.45 | niki@gmail.com       |
+|  105 | ramesh | cse    | 69.45 | ramesh@gmail.com     |
+|  106 | suresh | ece    | 64.45 | suresh@gmail.com     |
+|  107 | rakesh | mech   | 81.45 | rakesh@gmail.com     |
+|  108 | mukesh | civil  | 82.45 | mukesh@gmail.com     |
+|  109 | salman | cse    | 83.45 | salman@gmail.com     |
+|  110 | ajay   | ece    | 84.45 | ajay@gmail.com       |
+|  111 | vijay  | mech   | 54.45 | vijay@gmail.com      |
+|  112 | roshan | civil  | 55.45 | roshan@gmail.com     |
++------+--------+--------+-------+----------------------+*/
+
+
+create view cse_students
+as select * from college10
+where branch='cse';
+
+select * from cse_students;
+/*+------+--------+--------+-------+----------------------+
+| cid  | cname  | branch | per   | email                |
++------+--------+--------+-------+----------------------+
+|  101 | faisal | cse    | 80.45 | mdfaiskhan@gmail.com |
+|  105 | ramesh | cse    | 69.45 | ramesh@gmail.com     |
+|  109 | salman | cse    | 83.45 | salman@gmail.com     |
++------+--------+--------+-------+----------------------+*/
+
+create view ece_students
+as select * from college10
+where branch='ece';
+
+select * from ece_students;
+/*+------+--------+--------+-------+------------------+
+| cid  | cname  | branch | per   | email            |
++------+--------+--------+-------+------------------+
+|  102 | tej    | ece    | 70.45 | tej@gmail.com    |
+|  106 | suresh | ece    | 64.45 | suresh@gmail.com |
+|  110 | ajay   | ece    | 84.45 | ajay@gmail.com   |
++------+--------+--------+-------+------------------+*/
+
+create view civil_students
+as select * from college10
+where branch='civil';
+
+ create view mech_students
+ as select * from college10
+ where branch='mech';
+
+
+ select * from civil_students;
+/*+------+--------+--------+-------+------------------+
+| cid  | cname  | branch | per   | email            |
++------+--------+--------+-------+------------------+
+|  104 | niki   | civil  | 65.45 | niki@gmail.com   |
+|  108 | mukesh | civil  | 82.45 | mukesh@gmail.com |
+|  112 | roshan | civil  | 55.45 | roshan@gmail.com |
++------+--------+--------+-------+------------------+*/
+
+
+select * from mech_students;
+/*+------+--------+--------+-------+------------------+
+| cid  | cname  | branch | per   | email            |
++------+--------+--------+-------+------------------+
+|  103 | madhu  | mech   | 75.45 | madhu@gmail.com  |
+|  107 | rakesh | mech   | 81.45 | rakesh@gmail.com |
+|  111 | vijay  | mech   | 54.45 | vijay@gmail.com  |
++------+--------+--------+-------+------------------+*/
+
+/* operation: if we change the value in college , we can be able to see the same change in cse view table as well*/
+
+ update college10 set cname='Faizan' where cid=102;
+ 
+select * from college10;
+/*+------+--------+--------+-------+----------------------+
+| cid  | cname  | branch | per   | email                |
++------+--------+--------+-------+----------------------+
+|  101 | faisal | cse    | 80.45 | mdfaiskhan@gmail.com |
+|  102 | Faizan | ece    | 70.45 | tej@gmail.com        |
+|  103 | madhu  | mech   | 75.45 | madhu@gmail.com      |
+|  104 | niki   | civil  | 65.45 | niki@gmail.com       |
+|  105 | ramesh | cse    | 69.45 | ramesh@gmail.com     |
+|  106 | suresh | ece    | 64.45 | suresh@gmail.com     |
+|  107 | rakesh | mech   | 81.45 | rakesh@gmail.com     |
+|  108 | mukesh | civil  | 82.45 | mukesh@gmail.com     |
+|  109 | salman | cse    | 83.45 | salman@gmail.com     |
+|  110 | ajay   | ece    | 84.45 | ajay@gmail.com       |
+|  111 | vijay  | mech   | 54.45 | vijay@gmail.com      |
+|  112 | roshan | civil  | 55.45 | roshan@gmail.com     |
++------+--------+--------+-------+----------------------+*/
+
+
+select * from ece_students;
+/*+------+--------+--------+-------+------------------+
+| cid  | cname  | branch | per   | email            |
++------+--------+--------+-------+------------------+
+|  102 | Faizan | ece    | 70.45 | tej@gmail.com    |
+|  106 | suresh | ece    | 64.45 | suresh@gmail.com |
+|  110 | ajay   | ece    | 84.45 | ajay@gmail.com   |
++------+--------+--------+-------+------------------+*/
